@@ -1,34 +1,12 @@
 /* ==================================================
-   GALERIA DE IMAGENS
+   GALERIAS DE IMAGENS
 ================================================== */
 
-/*
-    Todas as fotografias da Casa 1.
-
-    Estrutura:
-    assets/
-        Casa1/
-            1.jpg
-            2.jpg
-            3.jpg
-*/
-
-const galleryImages = [
+const images = [
     "assets/Casa1/1.jpg",
     "assets/Casa1/2.jpg",
     "assets/Casa1/3.jpg"
 ];
-
-
-/*
-    Cada imóvel tem a sua própria imagem atual.
-
-    Como temos dois anúncios iguais neste exemplo:
-    galleryIndexes[0] = imagem atual do primeiro
-    galleryIndexes[1] = imagem atual do segundo
-*/
-
-const galleryIndexes = [];
 
 
 /* ==================================================
@@ -38,162 +16,64 @@ const galleryIndexes = [];
 const modal = document.getElementById("image-modal");
 
 const modalImage = document.getElementById("modal-image");
-
 const modalClose = document.getElementById("modal-close");
 
 const modalPrev = document.getElementById("modal-prev");
-
 const modalNext = document.getElementById("modal-next");
 
 const modalCurrent = document.getElementById("modal-current");
-
 const modalTotal = document.getElementById("modal-total");
 
-const modalThumbnails = document.getElementById("modal-thumbnails");
-
-
-/*
-    Índice do imóvel que está atualmente aberto
-    no modal.
-*/
-
-let activeGallery = 0;
-
-
-/* Número total de imagens */
-
-if (modalTotal) {
-    modalTotal.textContent = galleryImages.length;
-}
+const modalThumbnails =
+    document.getElementById("modal-thumbnails");
 
 
 /* ==================================================
-   GALERIAS DOS IMÓVEIS
+   ESTADO DA GALERIA
 ================================================== */
 
-const galleries = document.querySelectorAll(".property-gallery");
+let currentImage = 0;
 
 
-galleries.forEach((gallery, galleryIndex) => {
+/* ==================================================
+   INICIALIZAÃ‡ÃƒO DO MODAL
+================================================== */
 
-    /*
-        Cada galeria começa na primeira imagem.
-    */
-
-    galleryIndexes[galleryIndex] = 0;
+modalTotal.textContent = images.length;
 
 
-    const image = gallery.querySelector(".gallery-image");
+/* ==================================================
+   ATUALIZAR GALERIA PRINCIPAL
+================================================== */
 
-    const previousButton = gallery.querySelector(".gallery-prev");
+function updateGallery(gallery, index) {
 
-    const nextButton = gallery.querySelector(".gallery-next");
+    const image =
+        gallery.querySelector(".gallery-image");
 
-    const currentCounter = gallery.querySelector(".gallery-current");
+    const current =
+        gallery.querySelector(".gallery-current");
 
-    const totalCounter = gallery.querySelector(".gallery-total");
+    const total =
+        gallery.querySelector(".gallery-total");
 
 
-    /* Número total de imagens */
+    image.src = images[index];
 
-    if (totalCounter) {
-        totalCounter.textContent = galleryImages.length;
+    image.alt =
+        `Moradia T2 - imagem ${index + 1}`;
+
+
+    if (current) {
+        current.textContent = index + 1;
     }
 
 
-    /* ==================================================
-       MOSTRAR IMAGEM
-    ================================================== */
-
-    function showGalleryImage(index) {
-
-        /*
-            Se passar da última imagem,
-            volta para a primeira.
-        */
-
-        if (index >= galleryImages.length) {
-            index = 0;
-        }
-
-
-        /*
-            Se estiver antes da primeira,
-            vai para a última.
-        */
-
-        if (index < 0) {
-            index = galleryImages.length - 1;
-        }
-
-
-        galleryIndexes[galleryIndex] = index;
-
-
-        /* Alterar imagem */
-
-        image.src = galleryImages[index];
-
-
-        /* Atualizar contador */
-
-        if (currentCounter) {
-            currentCounter.textContent = index + 1;
-        }
-
+    if (total) {
+        total.textContent = images.length;
     }
 
-
-    /* ==================================================
-       SETA ESQUERDA
-    ================================================== */
-
-    previousButton.addEventListener("click", (event) => {
-
-        event.stopPropagation();
-
-        showGalleryImage(
-            galleryIndexes[galleryIndex] - 1
-        );
-
-    });
-
-
-    /* ==================================================
-       SETA DIREITA
-    ================================================== */
-
-    nextButton.addEventListener("click", (event) => {
-
-        event.stopPropagation();
-
-        showGalleryImage(
-            galleryIndexes[galleryIndex] + 1
-        );
-
-    });
-
-
-    /* ==================================================
-       CLICAR NA IMAGEM
-    ================================================== */
-
-    image.addEventListener("click", () => {
-
-        activeGallery = galleryIndex;
-
-        /*
-            O modal abre exatamente na fotografia
-            que está a ser mostrada na galeria.
-        */
-
-        openModal(
-            galleryIndexes[galleryIndex]
-        );
-
-    });
-
-});
+}
 
 
 /* ==================================================
@@ -202,54 +82,35 @@ galleries.forEach((gallery, galleryIndex) => {
 
 function openModal(index) {
 
-    if (!modal) return;
+    currentImage = index;
 
-
-    /*
-        Garantir que o índice é válido.
-    */
-
-    if (index < 0) {
-        index = galleryImages.length - 1;
-    }
-
-    if (index >= galleryImages.length) {
-        index = 0;
-    }
-
-
-    galleryIndexes[activeGallery] = index;
-
-
-    modalImage.src = galleryImages[index];
-
-    modalImage.alt =
-        `Moradia T2 - imagem ${index + 1}`;
-
-
-    modalCurrent.textContent = index + 1;
-
-
-    /*
-        Criar as miniaturas.
-    */
-
-    createThumbnails();
-
-
-    /*
-        Mostrar modal.
-    */
+    updateModal();
 
     modal.classList.add("open");
 
-
-    /*
-        Impedir o scroll da página enquanto
-        o modal está aberto.
-    */
-
     document.body.style.overflow = "hidden";
+
+}
+
+
+/* ==================================================
+   ATUALIZAR MODAL
+================================================== */
+
+function updateModal() {
+
+    modalImage.src =
+        images[currentImage];
+
+    modalImage.alt =
+        `Moradia T2 - imagem ${currentImage + 1}`;
+
+
+    modalCurrent.textContent =
+        currentImage + 1;
+
+
+    updateThumbnails();
 
 }
 
@@ -258,26 +119,18 @@ function openModal(index) {
    MINIATURAS
 ================================================== */
 
-function createThumbnails() {
-
-    if (!modalThumbnails) return;
-
+function updateThumbnails() {
 
     modalThumbnails.innerHTML = "";
 
 
-    const currentIndex =
-        galleryIndexes[activeGallery];
-
-
-    galleryImages.forEach((image, index) => {
+    images.forEach((image, index) => {
 
         const thumbnail =
             document.createElement("img");
 
 
         thumbnail.src = image;
-
 
         thumbnail.alt =
             `Miniatura ${index + 1}`;
@@ -288,31 +141,30 @@ function createThumbnails() {
         );
 
 
-        /*
-            Destacar a imagem atualmente selecionada.
-        */
+        if (index === currentImage) {
 
-        if (index === currentIndex) {
-
-            thumbnail.classList.add("active");
+            thumbnail.classList.add(
+                "active"
+            );
 
         }
 
 
-        /*
-            Clicar numa miniatura.
-        */
+        thumbnail.addEventListener(
+            "click",
+            () => {
 
-        thumbnail.addEventListener("click", (event) => {
+                currentImage = index;
 
-            event.stopPropagation();
+                updateModal();
 
-            changeModalImage(index);
+            }
+        );
 
-        });
 
-
-        modalThumbnails.appendChild(thumbnail);
+        modalThumbnails.appendChild(
+            thumbnail
+        );
 
     });
 
@@ -320,128 +172,217 @@ function createThumbnails() {
 
 
 /* ==================================================
-   TROCAR IMAGEM DO MODAL
+   MUDAR IMAGEM
 ================================================== */
 
-function changeModalImage(index) {
+function changeImage(direction) {
 
-    if (index >= galleryImages.length) {
-        index = 0;
+    currentImage += direction;
+
+
+    if (currentImage < 0) {
+
+        currentImage =
+            images.length - 1;
+
     }
 
 
-    if (index < 0) {
-        index = galleryImages.length - 1;
+    if (currentImage >= images.length) {
+
+        currentImage = 0;
+
     }
 
 
-    /*
-        Atualizar imagem atual do imóvel.
-    */
-
-    galleryIndexes[activeGallery] = index;
+    updateModal();
 
 
     /*
-        Atualizar imagem grande.
-    */
-
-    modalImage.src = galleryImages[index];
-
-    modalImage.alt =
-        `Moradia T2 - imagem ${index + 1}`;
-
-
-    /*
-        Atualizar contador.
-    */
-
-    modalCurrent.textContent = index + 1;
-
-
-    /*
-        Atualizar miniaturas.
-    */
-
-    createThumbnails();
-
-
-    /*
-        Atualizar também a imagem da galeria
-        que está por trás do modal.
+       Atualiza tambÃ©m a galeria
+       visÃ­vel na pÃ¡gina.
     */
 
     const galleries =
-        document.querySelectorAll(".property-gallery");
+        document.querySelectorAll(
+            ".property-gallery"
+        );
 
 
-    const gallery =
-        galleries[activeGallery];
+    galleries.forEach(gallery => {
+
+        updateGallery(
+            gallery,
+            currentImage
+        );
+
+    });
+
+}
 
 
-    if (gallery) {
+/* ==================================================
+   CONFIGURAR TODAS AS GALERIAS
+================================================== */
 
-        const galleryImage =
-            gallery.querySelector(".gallery-image");
+const galleries =
+    document.querySelectorAll(
+        ".property-gallery"
+    );
 
-        const galleryCounter =
-            gallery.querySelector(".gallery-current");
+
+galleries.forEach((gallery) => {
+
+    const image =
+        gallery.querySelector(
+            ".gallery-image"
+        );
 
 
-        if (galleryImage) {
-            galleryImage.src =
-                galleryImages[index];
+    const previous =
+        gallery.querySelector(
+            ".gallery-prev"
+        );
+
+
+    const next =
+        gallery.querySelector(
+            ".gallery-next"
+        );
+
+
+    let galleryIndex = 0;
+
+
+    /*
+       Inicializar
+    */
+
+    updateGallery(
+        gallery,
+        galleryIndex
+    );
+
+
+    /*
+       Seta esquerda
+    */
+
+    previous.addEventListener(
+        "click",
+        (event) => {
+
+            event.stopPropagation();
+
+            galleryIndex--;
+
+            if (galleryIndex < 0) {
+
+                galleryIndex =
+                    images.length - 1;
+
+            }
+
+
+            updateGallery(
+                gallery,
+                galleryIndex
+            );
+
         }
+    );
 
 
-        if (galleryCounter) {
-            galleryCounter.textContent =
-                index + 1;
+    /*
+       Seta direita
+    */
+
+    next.addEventListener(
+        "click",
+        (event) => {
+
+            event.stopPropagation();
+
+            galleryIndex++;
+
+            if (
+                galleryIndex >=
+                images.length
+            ) {
+
+                galleryIndex = 0;
+
+            }
+
+
+            updateGallery(
+                gallery,
+                galleryIndex
+            );
+
         }
+    );
+
+
+    /*
+       Clicar na imagem
+    */
+
+    image.addEventListener(
+        "click",
+        () => {
+
+            /*
+               O modal abre na imagem
+               que estÃ¡ atualmente visÃ­vel.
+            */
+
+            const imageNumber =
+                images.indexOf(
+                    image.getAttribute("src")
+                );
+
+
+            currentImage =
+                imageNumber >= 0
+                    ? imageNumber
+                    : galleryIndex;
+
+
+            openModal(currentImage);
+
+        }
+    );
+
+});
+
+
+/* ==================================================
+   SETAS DO MODAL
+================================================== */
+
+modalPrev.addEventListener(
+    "click",
+    (event) => {
+
+        event.stopPropagation();
+
+        changeImage(-1);
 
     }
+);
 
-}
 
-
-/* ==================================================
-   SETA ESQUERDA DO MODAL
-================================================== */
-
-if (modalPrev) {
-
-    modalPrev.addEventListener("click", (event) => {
+modalNext.addEventListener(
+    "click",
+    (event) => {
 
         event.stopPropagation();
 
+        changeImage(1);
 
-        changeModalImage(
-            galleryIndexes[activeGallery] - 1
-        );
-
-    });
-
-}
-
-
-/* ==================================================
-   SETA DIREITA DO MODAL
-================================================== */
-
-if (modalNext) {
-
-    modalNext.addEventListener("click", (event) => {
-
-        event.stopPropagation();
-
-
-        changeModalImage(
-            galleryIndexes[activeGallery] + 1
-        );
-
-    });
-
-}
+    }
+);
 
 
 /* ==================================================
@@ -450,43 +391,26 @@ if (modalNext) {
 
 function closeModal() {
 
-    if (!modal) return;
-
-
     modal.classList.remove("open");
-
-
-    /*
-        Voltar a permitir scroll.
-    */
 
     document.body.style.overflow = "";
 
 }
 
 
-if (modalClose) {
-
-    modalClose.addEventListener("click", (event) => {
-
-        event.stopPropagation();
-
-        closeModal();
-
-    });
-
-}
+modalClose.addEventListener(
+    "click",
+    closeModal
+);
 
 
 /*
-    Clicar no fundo escuro fecha o modal.
-
-    Clicar na imagem ou nas miniaturas NÃO fecha.
+   Clicar no fundo fecha.
 */
 
-if (modal) {
-
-    modal.addEventListener("click", (event) => {
+modal.addEventListener(
+    "click",
+    (event) => {
 
         if (event.target === modal) {
 
@@ -494,99 +418,83 @@ if (modal) {
 
         }
 
-    });
-
-}
+    }
+);
 
 
 /* ==================================================
    TECLADO
 ================================================== */
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener(
+    "keydown",
+    (event) => {
 
-    /*
-        Só funciona se o modal estiver aberto.
-    */
+        if (
+            !modal.classList.contains(
+                "open"
+            )
+        ) {
 
-    if (!modal || !modal.classList.contains("open")) {
-        return;
-    }
-
-
-    /* ESC */
-
-    if (event.key === "Escape") {
-
-        closeModal();
-
-    }
-
-
-    /* Seta esquerda */
-
-    if (event.key === "ArrowLeft") {
-
-        changeModalImage(
-            galleryIndexes[activeGallery] - 1
-        );
-
-    }
-
-
-    /* Seta direita */
-
-    if (event.key === "ArrowRight") {
-
-        changeModalImage(
-            galleryIndexes[activeGallery] + 1
-        );
-
-    }
-
-});
-
-
-/* ==================================================
-   HEADER
-================================================== */
-
-/*
-    O teu HTML original não tinha id="header",
-    por isso esta parte dava erro.
-
-    Agora o elemento existe, mas também fazemos
-    a verificação para o JS nunca parar por causa disso.
-*/
-
-const header = document.getElementById("header");
-
-
-if (header) {
-
-    window.addEventListener("scroll", () => {
-
-        if (window.scrollY > 20) {
-
-            header.classList.add("scrolled");
-
-        } else {
-
-            header.classList.remove("scrolled");
+            return;
 
         }
 
-    });
 
-}
+        if (event.key === "ArrowLeft") {
+
+            changeImage(-1);
+
+        }
+
+
+        if (event.key === "ArrowRight") {
+
+            changeImage(1);
+
+        }
+
+
+        if (event.key === "Escape") {
+
+            closeModal();
+
+        }
+
+    }
+);
 
 
 /* ==================================================
-   LOADING
+   FORMULÃRIO
 ================================================== */
 
-window.addEventListener("load", () => {
+/*
+   Atualmente Ã© apenas visual.
+   NÃ£o envia realmente os dados.
+*/
 
-    document.body.classList.add("loaded");
+const form =
+    document.getElementById(
+        "contact-form"
+    );
 
-});
+
+if (form) {
+
+    form.addEventListener(
+        "submit",
+        (event) => {
+
+            event.preventDefault();
+
+            alert(
+                "Mensagem enviada com sucesso!"
+            );
+
+            form.reset();
+
+        }
+    );
+
+}
