@@ -1,0 +1,831 @@
+﻿/* ==================================================
+   BASE
+================================================== */
+
+:root {
+    --navy: #172033;
+    --navy-dark: #111827;
+    --text: #172033;
+    --muted: #697386;
+    --icon: #5579b8;
+    --border: #e5e8ed;
+    --background: #ffffff;
+    --soft-background: #f7f8fa;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    margin: 0;
+    font-family: "Inter", Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+
+img {
+    max-width: 100%;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+button {
+    font-family: inherit;
+}
+
+
+.container {
+    width: min(1150px, 92%);
+    margin: 0 auto;
+}
+
+
+/* ==================================================
+   HEADER
+================================================== */
+
+header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid #eeeeee;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+
+.header-inner {
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.logo {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: -1px;
+    color: var(--navy-dark);
+}
+
+
+nav {
+    height: 68px;
+    display: flex;
+    align-items: stretch;
+}
+
+
+    nav a {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 0 22px;
+        color: var(--navy);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+
+        nav a:hover {
+            color: var(--icon);
+        }
+
+
+        nav a.active {
+            color: var(--navy-dark);
+        }
+
+
+            nav a.active::after {
+                content: "";
+                position: absolute;
+                left: 22px;
+                right: 22px;
+                bottom: 0;
+                height: 2px;
+                background: var(--navy-dark);
+            }
+
+
+/* ==================================================
+   PROJETOS
+================================================== */
+
+.properties {
+    padding: 42px 0 55px;
+}
+
+
+.property-card {
+    padding-bottom: 55px;
+    margin-bottom: 55px;
+    border-bottom: 1px solid var(--border);
+}
+
+
+    .property-card:last-child {
+        margin-bottom: 0;
+    }
+
+
+/* ==================================================
+   CABEÇALHO DO IMÓVEL
+================================================== */
+
+.property-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 22px;
+}
+
+
+.property-label {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--icon);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+
+.property-header h1 {
+    margin: 0;
+    color: var(--text);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+
+.property-summary {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-shrink: 0;
+}
+
+
+.property-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+
+    .property-item i {
+        color: #52657d;
+        font-size: 14px;
+    }
+
+
+    .property-item span {
+        color: #52657d;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+
+/* ==================================================
+   LAYOUT DO IMÓVEL
+================================================== */
+
+.property-layout {
+    display: grid;
+    grid-template-columns: 48% 1fr;
+    gap: 45px;
+    align-items: start;
+}
+
+
+/* ==================================================
+   GALERIA
+================================================== */
+
+.property-gallery {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    background: #eef0f3;
+}
+
+
+.gallery-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+}
+
+
+    .gallery-image:hover {
+        transform: scale(1.015);
+    }
+
+
+/* ==================================================
+   SETAS DA GALERIA
+================================================== */
+
+.gallery-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    width: 38px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--navy-dark);
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background 0.2s ease;
+}
+
+
+    .gallery-arrow:hover {
+        background: #ffffff;
+    }
+
+
+.gallery-prev {
+    left: 0;
+}
+
+
+.gallery-next {
+    right: 0;
+}
+
+
+/* ==================================================
+   CONTADOR DA GALERIA
+================================================== */
+
+.gallery-counter {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 4px 9px;
+    background: rgba(0, 0, 0, 0.58);
+    color: #ffffff;
+    border-radius: 4px;
+    font-size: 0.7rem;
+}
+
+
+/* ==================================================
+   INFORMAÇÃO
+================================================== */
+
+.property-info {
+    min-width: 0;
+}
+
+
+.property-details h2,
+.property-description h2 {
+    margin: 0 0 10px;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+
+/* ==================================================
+   DETALHES
+================================================== */
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--border);
+}
+
+
+.detail {
+    min-height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+
+.detail-label {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+    .detail-label i {
+        width: 16px;
+        flex-shrink: 0;
+        color: var(--icon);
+        font-size: 13px;
+    }
+
+
+    .detail-label span {
+        color: var(--muted);
+        font-size: 0.69rem;
+    }
+
+
+.detail strong {
+    color: var(--text);
+    font-size: 0.72rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+
+/* ==================================================
+   DESCRIÇÃO
+================================================== */
+
+.property-description {
+    margin-top: 25px;
+}
+
+
+    .property-description p {
+        max-width: 580px;
+        margin: 0 0 9px;
+        color: #4f5968;
+        font-size: 0.76rem;
+        line-height: 1.7;
+    }
+
+
+        .property-description p:last-child {
+            margin-bottom: 0;
+        }
+
+
+/* ==================================================
+   MODAL DA GALERIA
+================================================== */
+
+.image-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 70px;
+    background: rgba(10, 14, 23, 0.94);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+
+    .image-modal.open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+
+/* ==================================================
+   CONTEÚDO DO MODAL
+================================================== */
+
+.modal-content {
+    width: min(1000px, 90vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+
+#modal-image {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+
+/* ==================================================
+   MINIATURAS
+================================================== */
+
+.modal-thumbnails {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    padding: 4px;
+    overflow-x: auto;
+}
+
+
+.modal-thumbnail {
+    width: 78px;
+    height: 58px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    opacity: 0.48;
+    cursor: pointer;
+    transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+
+    .modal-thumbnail:hover {
+        opacity: 0.8;
+        transform: translateY(-2px);
+    }
+
+
+    .modal-thumbnail.active {
+        opacity: 1;
+        border-color: #ffffff;
+    }
+
+
+/* ==================================================
+   SETAS DO MODAL
+================================================== */
+
+.modal-arrow {
+    position: absolute;
+    top: 50%;
+    width: 52px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-size: 44px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background 0.2s ease;
+}
+
+
+    .modal-arrow:hover {
+        background: rgba(255, 255, 255, 0.23);
+    }
+
+
+.modal-prev {
+    left: 25px;
+}
+
+
+.modal-next {
+    right: 25px;
+}
+
+
+/* ==================================================
+   FECHAR MODAL
+================================================== */
+
+.modal-close {
+    position: absolute;
+    top: 18px;
+    right: 25px;
+    z-index: 5;
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    font-size: 38px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+
+    .modal-close:hover {
+        opacity: 0.65;
+    }
+
+
+/* ==================================================
+   CONTADOR DO MODAL
+================================================== */
+
+.modal-counter {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    color: #ffffff;
+    font-size: 0.78rem;
+    transform: translateX(-50%);
+}
+
+
+/* ==================================================
+   CTA
+================================================== */
+
+.property-cta {
+    padding: 45px 0;
+    background: var(--navy);
+    color: #ffffff;
+}
+
+
+.cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+
+.cta-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #9eafd0;
+    font-size: 0.67rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+
+.property-cta h2 {
+    margin: 0 0 4px;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+
+.property-cta p {
+    margin: 0;
+    color: #c4cad4;
+    font-size: 0.78rem;
+}
+
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+    min-height: 43px;
+    padding: 0 20px;
+    background: #ffffff;
+    color: var(--navy);
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+
+    .btn-primary:hover {
+        background: #edf0f4;
+        transform: translateY(-1px);
+    }
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+footer {
+    padding: 45px 0 20px;
+    background: var(--navy-dark);
+    color: #ffffff;
+}
+
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: 40px;
+}
+
+
+.footer-brand h3 {
+    margin: 0 0 8px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+
+.footer-grid h4 {
+    margin: 0 0 13px;
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+
+.footer-grid p {
+    margin: 0 0 6px;
+    color: #aeb7c5;
+    font-size: 0.72rem;
+}
+
+
+.footer-grid a {
+    display: block;
+    margin: 6px 0;
+    color: #c5ccd7;
+    font-size: 0.72rem;
+    transition: color 0.2s ease;
+}
+
+
+    .footer-grid a:hover {
+        color: #ffffff;
+    }
+
+
+.footer-bottom {
+    margin-top: 35px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+
+    .footer-bottom p {
+        margin: 0;
+        color: #8f99aa;
+        font-size: 0.67rem;
+    }
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 800px) {
+
+    .header-inner {
+        min-height: 60px;
+    }
+
+
+    nav {
+        height: 60px;
+    }
+
+
+        nav a {
+            padding: 0 12px;
+            font-size: 0.76rem;
+        }
+
+
+            nav a.active::after {
+                left: 12px;
+                right: 12px;
+            }
+
+
+    .logo {
+        font-size: 1.7rem;
+    }
+
+
+    .property-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+
+    .property-summary {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+
+    .property-layout {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+
+    .property-gallery {
+        height: 360px;
+    }
+
+
+    .cta-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+
+    .image-modal {
+        padding: 60px 15px 25px;
+    }
+
+
+    .modal-arrow {
+        width: 42px;
+        height: 55px;
+        font-size: 36px;
+    }
+
+
+    .modal-prev {
+        left: 8px;
+    }
+
+
+    .modal-next {
+        right: 8px;
+    }
+
+
+    #modal-image {
+        max-width: 92vw;
+        max-height: 65vh;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .properties {
+        padding-top: 28px;
+    }
+
+
+    .property-gallery {
+        height: 260px;
+    }
+
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .modal-thumbnail {
+        width: 65px;
+        height: 50px;
+    }
+}
