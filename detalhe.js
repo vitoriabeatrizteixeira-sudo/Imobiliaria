@@ -5,62 +5,62 @@
 const galleryImages = [
 
     {
-        src: "assets/Extrema/FachadaPrincipal.png",
+        src: "assets/Extrema/FachadaPrincipal.jpg",
         title: "Fachada Principal",
         description: "Vista da Fachada Principal."
     },
 
     {
-        src: "assets/Extrema/FachadaTraseiras.png",
+        src: "assets/Extrema/FachadaTraseiras.jpg",
         title: "Fachada Traseira",
         description: "Vista da Fachada Traseira."
     },
 
     {
-        src: "assets/Extrema/VistaNordeste.png",
+        src: "assets/Extrema/VistaNordeste.jpg",
         title: "Fachada Nordeste",
         description: "Vista da Fachada Nordeste."
     },
 
     {
-        src: "assets/Extrema/VistaNoroeste.png",
+        src: "assets/Extrema/VistaNoroeste.jpg",
         title: "Fachada Noroeste",
         description: "Vista da Fachada Noroeste."
     },
 
     {
-        src: "assets/Extrema/FachadaPrincipalNoite.png",
-        title: "Fachada Principal à Noite",
+        src: "assets/Extrema/FachadaPrincipalNoite.jpg",
+        title: "Fachada Principal Ã  Noite",
         description: "Vista da Fachada Principal \u00e0 Noite."
     },
 
     {
-        src: "assets/Extrema/FachadaTraseirasNoite.png",
-        title: "Fachada Traseira à Noite",
+        src: "assets/Extrema/FachadaTraseirasNoite.jpg",
+        title: "Fachada Traseira Ã  Noite",
         description: "Vista da Fachada Traseira \u00e0 Noite."
     },
 
     {
-        src: "assets/Extrema/VistaNoroesteNoite.png",
-        title: "Fachada Noroeste à Noite",
+        src: "assets/Extrema/VistaNoroesteNoite.jpg",
+        title: "Fachada Noroeste Ã  Noite",
         description: "Vista da Fachada Noroeste \u00e0 noite."
     },
 
     {
-        src: "assets/Extrema/FachadaNorteNoite.png",
-        title: "Fachada Norte à Noite",
+        src: "assets/Extrema/FachadaNorteNoite.jpg",
+        title: "Fachada Norte Ã  Noite",
         description: "Vista da Fachada Norte \u00e0 noite."
     },
 
     {
         src: "assets/Extrema/QuadroSinotico.png",
-        title: "Quadro Sinótico",
+        title: "Quadro SinÃ³tico",
         description: "Quadro Sin\u00f3tico da Opera\u00e7\u00e3o Urban\u00edstica."
     },
 
     {
         src: "assets/Extrema/QuadroSinoticoFracoes.png",
-        title: "Quadro Sinótico de Frações",
+        title: "Quadro SinÃ³tico de FraÃ§Ãµes",
         description: "Quadro Sin\u00f3tico das Fra\u00e7\u00f5es Aut\u00f3nomas."
     },
 
@@ -157,16 +157,23 @@ function updateModal() {
     }
 
 
-    document
-        .querySelectorAll(".modal-thumbnail")
-        .forEach(function (thumbnail, index) {
+    const thumbnails = document.querySelectorAll(".modal-thumbnail");
 
-            thumbnail.classList.toggle(
-                "active",
-                index === currentIndex
-            );
+    thumbnails.forEach(function (thumbnail, index) {
 
-        });
+        const isActive = index === currentIndex;
+
+        thumbnail.classList.toggle("active", isActive);
+
+        if (isActive) {
+            thumbnail.scrollIntoView({
+                behavior: "smooth",
+                inline: "center",
+                block: "nearest"
+            });
+        }
+
+    });
 
 }
 
@@ -267,6 +274,7 @@ function openModal(index) {
         );
 
 
+    createThumbnails();
     updateModal();
 
 
@@ -280,6 +288,17 @@ function openModal(index) {
     document.body.classList.add(
         "modal-open"
     );
+
+    setTimeout(function () {
+        const activeThumb = document.querySelector(".modal-thumbnail.active");
+        if (activeThumb) {
+            activeThumb.scrollIntoView({
+                behavior: "smooth",
+                inline: "center",
+                block: "nearest"
+            });
+        }
+    }, 100);
 
 }
 
@@ -349,7 +368,7 @@ function nextImage() {
 
 
 /* =========================================================
-   BOTÕES DA GALERIA
+   BOTÃ•ES DA GALERIA
 ========================================================= */
 
 document
@@ -496,14 +515,14 @@ if (
             );
 
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
 
     /* =====================================================
-       PIN PRINCIPAL
+        PIN PRINCIPAL
     ====================================================== */
 
     const projectIcon =
@@ -545,7 +564,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 
     /* =====================================================
-       PINS DOS PONTOS DE INTERESSE
+        PINS DOS PONTOS DE INTERESSE
     ====================================================== */
 
     const pointIcon =
@@ -631,8 +650,6 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             title: "Lidl S\u00e3o Cosme Gondomar"
         },
 
-        
-
         {
             coordinates: [
                 41.14036966547226,
@@ -665,7 +682,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 
     /* =====================================================
-       MAPA EM GRANDE
+        MAPA EM GRANDE
     ====================================================== */
 
     if (mapExpandButton) {
@@ -757,7 +774,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 
 /* =========================================================
-   INICIALIZAÇÃO
+   INICIALIZAÃ‡ÃƒO
 ========================================================= */
 
 createThumbnails();
