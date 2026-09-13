@@ -1,578 +1,225 @@
-/* =========================================================
-   GALERIAS DA HOMEPAGE
-========================================================= */
-
-document
-    .querySelectorAll("[data-project-gallery]")
-    .forEach(function (gallery) {
-
-        const slides =
-            gallery.querySelectorAll(".project-slide");
-
-        const previousButton =
-            gallery.querySelector(".project-gallery-prev");
-
-        const nextButton =
-            gallery.querySelector(".project-gallery-next");
-
-        const dots =
-            gallery.querySelectorAll(".gallery-dot");
-
-        const currentCounter =
-            gallery.querySelector(".project-current");
-
-        const totalCounter =
-            gallery.querySelector(".project-total");
-
-        let currentIndex = 0;
-
-
-        if (!slides.length) {
-            return;
-        }
-
-
-        if (totalCounter) {
-            totalCounter.textContent =
-                slides.length;
-        }
-
-
-        function showSlide(index) {
-
-            currentIndex =
-                (index + slides.length) % slides.length;
-
-
-            slides.forEach(function (slide, slideIndex) {
-
-                slide.classList.toggle(
-                    "active",
-                    slideIndex === currentIndex
-                );
-
-            });
-
-
-            dots.forEach(function (dot, dotIndex) {
-
-                dot.classList.toggle(
-                    "active",
-                    dotIndex === currentIndex
-                );
-
-            });
-
-
-            if (currentCounter) {
-
-                currentCounter.textContent =
-                    currentIndex + 1;
-
-            }
-
-        }
-
-
-        if (previousButton) {
-
-            previousButton.addEventListener(
-                "click",
-                function () {
-
-                    showSlide(currentIndex - 1);
-
-                }
-            );
-
-        }
-
-
-        if (nextButton) {
-
-            nextButton.addEventListener(
-                "click",
-                function () {
-
-                    showSlide(currentIndex + 1);
-
-                }
-            );
-
-        }
-
-
-        dots.forEach(function (dot, dotIndex) {
-
-            dot.addEventListener(
-                "click",
-                function () {
-
-                    showSlide(dotIndex);
-
-                }
-            );
-
-        });
-
-
-        showSlide(0);
-
-    });
-
-
-
-/* =========================================================
-   FORMUL¡RIO DE CONTACTO & POPUP DE FEEDBACK
-========================================================= */
-
-const contactForm =
-    document.getElementById("contact-form");
-
 const APPS_SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbz0M-oAeEBR2OGqwc9uNkBKyLXgM7pAU_HNff_2N95TpjokSlGFJBohJSsPNTPfTcbk/exec";
+const FORM_REQUEST_TIMEOUT_MS = 15000;
 
+const initializeProjectGalleries = () => {
+    document.querySelectorAll("[data-project-gallery]").forEach((gallery) => {
+        const slides = [...gallery.querySelectorAll(".project-slide")];
+        const dots = [...gallery.querySelectorAll(".gallery-dot")];
+        const previousButton = gallery.querySelector(".project-gallery-prev");
+        const nextButton = gallery.querySelector(".project-gallery-next");
+        const currentCounter = gallery.querySelector(".project-current");
+        const totalCounter = gallery.querySelector(".project-total");
 
-// FunÁ„o para criar e exibir o Popup elegante
-function showFeedbackModal(title, text, isError = false) {
-    // Remove modal anterior se existir
-    const existingModal = document.getElementById("custom-feedback-modal");
-    if (existingModal) {
-        existingModal.remove();
-    }
+        if (!slides.length) return;
 
-    // Overlay (Fundo escuro transparente)
+        let currentIndex = 0;
+        if (totalCounter) totalCounter.textContent = slides.length;
+
+        const showSlide = (index) => {
+            currentIndex = (index + slides.length) % slides.length;
+
+            slides.forEach((slide, slideIndex) => {
+                slide.classList.toggle("active", slideIndex === currentIndex);
+            });
+            dots.forEach((dot, dotIndex) => {
+                dot.classList.toggle("active", dotIndex === currentIndex);
+            });
+
+            if (currentCounter) currentCounter.textContent = currentIndex + 1;
+        };
+
+        previousButton?.addEventListener("click", () => showSlide(currentIndex - 1));
+        nextButton?.addEventListener("click", () => showSlide(currentIndex + 1));
+        dots.forEach((dot, index) => dot.addEventListener("click", () => showSlide(index)));
+        showSlide(0);
+    });
+};
+
+const showFeedbackModal = (title, text, isError = false) => {
+    document.getElementById("custom-feedback-modal")?.remove();
+
     const overlay = document.createElement("div");
     overlay.id = "custom-feedback-modal";
-    overlay.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(4px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 99999;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    `;
+    overlay.className = "feedback-modal";
 
-    // Caixote do Popup com a estÈtica da marca Umbau
-    const modalContent = document.createElement("div");
-    modalContent.style.cssText = `
-        background-color: #1a1a1a;
-        color: #ffffff;
-        padding: 40px 32px;
-        border-radius: 4px;
-        max-width: 440px;
-        width: 90%;
-        text-align: center;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        transform: translateY(20px);
-        transition: transform 0.3s ease;
-        position: relative;
-        font-family: inherit;
-    `;
+    const content = document.createElement("div");
+    content.className = "feedback-modal-content";
 
-    // Õcone subtil
-    const iconSpan = document.createElement("div");
-    iconSpan.style.cssText = "font-size: 28px; margin-bottom: 16px;";
-    iconSpan.innerHTML = isError ? "&#9888;" : "&#10003;";
+    const icon = document.createElement("div");
+    icon.className = "feedback-modal-icon";
+    icon.innerHTML = isError ? "&#9888;" : "&#10003;";
 
-    // TÌtulo Serifado
-    const modalTitle = document.createElement("h3");
-    modalTitle.style.cssText = `
-        font-family: 'Playfair Display', serif, Georgia;
-        font-size: 26px;
-        font-weight: 400;
-        margin: 0 0 12px 0;
-        color: #ffffff;
-        letter-spacing: -0.5px;
-    `;
-    modalTitle.textContent = title;
+    const heading = document.createElement("h3");
+    heading.textContent = title;
 
-    // Texto descritivo
-    const modalText = document.createElement("p");
-    modalText.style.cssText = `
-        font-size: 14px;
-        color: #cccccc;
-        margin: 0 0 28px 0;
-        line-height: 1.6;
-        font-weight: 300;
-    `;
-    modalText.textContent = text;
+    const description = document.createElement("p");
+    description.textContent = text;
 
-    // Bot„o de fechar minimalista
-    const closeBtn = document.createElement("button");
-    closeBtn.textContent = "Fechar";
-    closeBtn.style.cssText = `
-        background-color: #ffffff;
-        color: #1a1a1a;
-        border: none;
-        padding: 12px 36px;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: background-color 0.2s ease, color 0.2s ease;
-        border-radius: 2px;
-    `;
+    const closeButton = document.createElement("button");
+    closeButton.type = "button";
+    closeButton.className = "feedback-modal-close";
+    closeButton.textContent = "Fechar";
 
-    closeBtn.onmouseover = function () {
-        closeBtn.style.backgroundColor = "#e0e0e0";
-    };
-    closeBtn.onmouseout = function () {
-        closeBtn.style.backgroundColor = "#ffffff";
+    const closeModal = () => {
+        overlay.classList.remove("active");
+        window.setTimeout(() => overlay.remove(), 300);
     };
 
-    function closeModal() {
-        overlay.style.opacity = "0";
-        modalContent.style.transform = "translateY(20px)";
-        setTimeout(() => {
-            if (overlay.parentNode) {
-                overlay.parentNode.removeChild(overlay);
-            }
-        }, 300);
-    }
-
-    closeBtn.addEventListener("click", closeModal);
-    overlay.addEventListener("click", function (e) {
-        if (e.target === overlay) {
-            closeModal();
-        }
+    closeButton.addEventListener("click", closeModal);
+    overlay.addEventListener("click", ({ target }) => {
+        if (target === overlay) closeModal();
     });
 
-    modalContent.appendChild(iconSpan);
-    modalContent.appendChild(modalTitle);
-    modalContent.appendChild(modalText);
-    modalContent.appendChild(closeBtn);
-    overlay.appendChild(modalContent);
+    content.append(icon, heading, description, closeButton);
+    overlay.appendChild(content);
     document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add("active"));
+};
 
-    // AnimaÁ„o de entrada
-    requestAnimationFrame(() => {
-        overlay.style.opacity = "1";
-        modalContent.style.transform = "translateY(0)";
-    });
-}
+const initializeContactForm = () => {
+    const contactForm = document.getElementById("contact-form");
+    if (!contactForm) return;
 
+    const fields = {
+        name: contactForm.querySelector("#name"),
+        email: contactForm.querySelector("#email"),
+        phone: contactForm.querySelector("#phone"),
+        message: contactForm.querySelector("#message"),
+        privacyConsent: contactForm.querySelector("#privacy-consent")
+    };
 
-if (contactForm) {
-
-    function setFieldError(input, message) {
-
-        const group =
-            input.closest(".form-group");
-
-
-        if (!group) {
-            return;
-        }
-
+    const setFieldError = (input, message) => {
+        const group = input.closest(".form-group");
+        if (!group || group.querySelector(".field-error-msg")) return;
 
         group.classList.add("has-error");
+        input.setAttribute("aria-invalid", "true");
+        const errorText = document.createElement("span");
+        errorText.className = "field-error-msg";
+        errorText.textContent = message;
+        group.appendChild(errorText);
+    };
 
+    const clearFieldError = (input) => {
+        const group = input.closest(".form-group");
+        if (!group) return;
 
-        if (
-            !group.querySelector(".field-error-msg")
-        ) {
+        group.classList.remove("has-error");
+        input.removeAttribute("aria-invalid");
+        group.querySelector(".field-error-msg")?.remove();
+    };
 
-            const errorText =
-                document.createElement("span");
+    const clearAllFieldErrors = () => {
+        contactForm.querySelectorAll(".has-error").forEach((group) => {
+            group.classList.remove("has-error");
+        });
+        contactForm.querySelectorAll(".field-error-msg").forEach((message) => message.remove());
+        contactForm.querySelectorAll("[aria-invalid='true']").forEach((input) => {
+            input.removeAttribute("aria-invalid");
+        });
+    };
 
-            errorText.className =
-                "field-error-msg";
+    const validateForm = () => {
+        const { name, email, phone, message, privacyConsent } = fields;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let firstInvalidField;
 
-            errorText.textContent =
-                message;
+        const invalidate = (input, errorMessage) => {
+            firstInvalidField ??= input;
+            setFieldError(input, errorMessage);
+        };
 
-            group.appendChild(errorText);
-
+        if (!name.value.trim()) {
+            invalidate(name, "Por favor, introduza o seu nome.");
+        }
+        if (!email.value.trim()) {
+            invalidate(email, "Por favor, introduza o seu email.");
+        } else if (!emailRegex.test(email.value.trim())) {
+            invalidate(email, "Por favor, introduza um email v√°lido (ex: nome@dominio.com).");
+        }
+        if (!phone.value.trim()) {
+            invalidate(phone, "Por favor, introduza o seu n√∫mero de telefone.");
+        } else if (phone.value.replace(/\D/g, "").length < 9) {
+            invalidate(phone, "Por favor, introduza um n√∫mero de telefone v√°lido.");
+        }
+        if (!message.value.trim()) {
+            invalidate(message, "Por favor, escreva a sua mensagem.");
+        }
+        if (!privacyConsent.checked) {
+            invalidate(privacyConsent, "Para enviar a mensagem, aceite a Pol√≠tica de Privacidade.");
         }
 
-    }
+        return firstInvalidField;
+    };
 
+    contactForm.querySelectorAll("input, textarea").forEach((input) => {
+        const clearError = () => clearFieldError(input);
+        input.addEventListener("input", clearError);
+        input.addEventListener("change", clearError);
+    });
 
-    function clearFieldError(input) {
-
-        const group =
-            input.closest(".form-group");
-
-
-        if (!group) {
+    contactForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        clearAllFieldErrors();
+        const firstInvalidField = validateForm();
+        if (firstInvalidField) {
+            firstInvalidField.focus();
             return;
         }
 
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalButtonContent = submitButton?.innerHTML ?? "";
 
-        group.classList.remove("has-error");
-
-
-        const errorMessage =
-            group.querySelector(".field-error-msg");
-
-
-        if (errorMessage) {
-            errorMessage.remove();
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.innerHTML = "<span>A enviar...</span>";
         }
 
-    }
+        let requestTimeout;
 
-
-    contactForm
-        .querySelectorAll("input, textarea")
-        .forEach(function (input) {
-
-            input.addEventListener(
-                "input",
-                function () {
-
-                    clearFieldError(this);
-
-                }
+        try {
+            const formData = new FormData(contactForm);
+            const requestController = new AbortController();
+            requestTimeout = window.setTimeout(
+                () => requestController.abort(),
+                FORM_REQUEST_TIMEOUT_MS
             );
 
-        });
+            await fetch(APPS_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString(),
+                signal: requestController.signal
+            });
 
+            contactForm.reset();
+            showFeedbackModal(
+                "Mensagem Enviada",
+                "Obrigado pelo seu contacto. A nossa equipa responder√° o mais brevemente poss√≠vel."
+            );
+        } catch (error) {
+            const message = error.name === "AbortError"
+                ? "O envio demorou demasiado tempo. Verifique a sua liga√ß√£o e tente novamente."
+                : "Ocorreu um erro ao enviar. Por favor, tente mais tarde ou entre em contacto diretamente connosco.";
 
-    contactForm.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
-
-
-            let isValid = true;
-
-
-            contactForm
-                .querySelectorAll(".has-error")
-                .forEach(function (group) {
-
-                    group.classList.remove(
-                        "has-error"
-                    );
-
-                });
-
-
-            contactForm
-                .querySelectorAll(".field-error-msg")
-                .forEach(function (message) {
-
-                    message.remove();
-
-                });
-
-
-            const nameInput =
-                contactForm.querySelector("#name");
-
-            const emailInput =
-                contactForm.querySelector("#email");
-
-            const phoneInput =
-                contactForm.querySelector("#phone");
-
-            const messageInput =
-                contactForm.querySelector("#message");
-
-
-            /* =================================================
-               NOME
-            ================================================== */
-
-            if (!nameInput.value.trim()) {
-
-                isValid = false;
-
-                setFieldError(
-                    nameInput,
-                    "Por favor, introduza o seu nome."
-                );
-
-            }
-
-
-            /* =================================================
-               EMAIL
-            ================================================== */
-
-            const emailRegex =
-                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-            if (!emailInput.value.trim()) {
-
-                isValid = false;
-
-                setFieldError(
-                    emailInput,
-                    "Por favor, introduza o seu email."
-                );
-
-            } else if (
-                !emailRegex.test(
-                    emailInput.value.trim()
-                )
-            ) {
-
-                isValid = false;
-
-                setFieldError(
-                    emailInput,
-                    "Por favor, introduza um email v\u00e0lido (ex: nome@dominio.com)."
-                );
-
-            }
-
-
-            /* =================================================
-               TELEFONE
-            ================================================== */
-
-            const phoneDigits =
-                phoneInput.value.replace(/\D/g, "");
-
-
-            if (!phoneInput.value.trim()) {
-
-                isValid = false;
-
-                setFieldError(
-                    phoneInput,
-                    "Por favor, introduza o seu n\u00famero de telefone."
-                );
-
-            } else if (
-                phoneDigits.length < 9
-            ) {
-
-                isValid = false;
-
-                setFieldError(
-                    phoneInput,
-                    "Por favor, introduza um n\u00famero de telefone v\u00e0lido."
-                );
-
-            }
-
-
-            /* =================================================
-               MENSAGEM
-            ================================================== */
-
-            if (!messageInput.value.trim()) {
-
-                isValid = false;
-
-                setFieldError(
-                    messageInput,
-                    "Por favor, escreva a sua mensagem."
-                );
-
-            }
-
-
-            if (!isValid) {
-                return;
-            }
-
-
-            /* =================================================
-               ENVIO
-            ================================================== */
-
-            const submitButton =
-                contactForm.querySelector(
-                    'button[type="submit"]'
-                );
-
-
-            const originalButtonContent =
-                submitButton
-                    ? submitButton.innerHTML
-                    : "";
-
+            console.error("Erro ao enviar mensagem:", error);
+            showFeedbackModal(
+                "Erro no Envio",
+                message,
+                true
+            );
+        } finally {
+            window.clearTimeout(requestTimeout);
 
             if (submitButton) {
-
-                submitButton.disabled = true;
-
-                submitButton.innerHTML =
-                    "<span>A enviar...</span>";
-
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonContent;
             }
-
-
-            const formData =
-                new FormData(contactForm);
-
-
-            const searchParams =
-                new URLSearchParams(formData);
-
-
-            fetch(
-                APPS_SCRIPT_URL,
-                {
-                    method: "POST",
-
-                    mode: "no-cors",
-
-                    headers: {
-                        "Content-Type":
-                            "application/x-www-form-urlencoded"
-                    },
-
-                    body:
-                        searchParams.toString()
-                }
-            )
-                .then(function () {
-
-                    contactForm.reset();
-
-                    // Dispara Popup de Sucesso com estilo Umbau
-                    showFeedbackModal(
-                        "Mensagem Enviada",
-                        "Obrigado pelo seu contacto. A nossa equipa responder\u00e1 o mais brevemente poss\u00edvel.",
-                        false
-                    );
-
-                })
-                .catch(function (error) {
-
-                    console.error(
-                        "Erro ao enviar mensagem:",
-                        error
-                    );
-
-                    // Dispara Popup de Erro com estilo Umbau
-                    showFeedbackModal(
-                        "Erro no Envio",
-                        "Ocorreu um erro ao enviar. Por favor, tente mais tarde ou entre em contacto diretamente connosco.",
-                        true
-                    );
-
-                })
-                .finally(function () {
-
-                    if (submitButton) {
-
-                        submitButton.disabled = false;
-
-                        submitButton.innerHTML =
-                            originalButtonContent;
-
-                    }
-
-                });
-
         }
-    );
+    });
+};
 
-}
+initializeProjectGalleries();
+initializeContactForm();
