@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Umbau | Edifício Residences Extrema</title>
+
+    <meta name="description"
+          content="Edifício Residences Extrema - Umbau.">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+    <header class="site-header">
+
+        <div class="header-container">
+
+            <a href="index.html"
+               class="logo"
+               aria-label="Umbau - página inicial">
+
+                <span class="logo-main">
+                    Umbau.
+                </span>
+
+                <span class="logo-sub">
+                    empreendimentos
+                </span>
+
+            </a>
+
+
+            <nav class="main-nav">
+
+                <a href="index.html#empreendimentos"
+                   class="nav-link active">
+
+                    Empreendimentos
+
+                </a>
+
+                <a href="contacto.html"
+                   class="btn-header">
+
+                    Contacte-nos
+
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="detail-page">
+
+            <div class="detail-container">
+
+                <a href="index.html#empreendimentos"
+                   class="detail-back">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    <span>
+                        Voltar aos empreendimentos
+                    </span>
+
+                </a>
+
+
+                <div class="detail-heading">
+
+                    <div>
+
+                        <h1>
+                            Edifício Residences Extrema
+                        </h1>
+
+                    </div>
+
+
+                    <div class="detail-price">
+                        612.500,00 €
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     GALERIA
+                ================================================== -->
+
+                <div class="detail-gallery"
+                     id="detail-gallery">
+
+                    <button class="detail-gallery-main gallery-trigger"
+                            type="button"
+                            data-gallery-index="0"
+                            aria-label="Abrir galeria">
+
+                        <img src="assets/Extrema/FachadaPrincipal.png"
+                             alt="Edifício Residences Extrema - Fachada Principal">
+
+                        <span class="detail-gallery-hint">
+
+                            <i class="bi bi-arrows-fullscreen"></i>
+
+                            Ver galeria
+
+                        </span>
+
+                    </button>
+
+
+                    <div class="detail-gallery-side">
+
+                        <button class="detail-gallery-small gallery-trigger"
+                                type="button"
+                                data-gallery-index="1"
+                                aria-label="Abrir segunda imagem">
+
+                            <img src="assets/Extrema/FachadaTraseiras.png"
+                                 alt="Edifício Residences Extrema - Fachada Traseira">
+
+                        </button>
+
+
+                        <button class="detail-gallery-small gallery-trigger"
+                                type="button"
+                                data-gallery-index="2"
+                                aria-label="Abrir terceira imagem">
+
+                            <img src="assets/Extrema/VistaNordeste.png"
+                                 alt="Edifício Residences Extrema - Fachada Nordeste">
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     RESUMO
+                ================================================== -->
+
+                <div class="detail-overview">
+
+                    <div class="overview-item">
+
+                        <i class="bi bi-door-closed"></i>
+
+                        <div>
+
+                            <span class="overview-label">
+                                Tipologias
+                            </span>
+
+                            <strong class="overview-value">
+                                T0 a T1
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-item">
+
+                        <i class="bi bi-house"></i>
+
+                        <div>
+
+                            <span class="overview-label">
+                                Áreas
+                            </span>
+
+                            <strong class="overview-value">
+                                25 m² a 45 m²
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-item">
+
+                        <i class="bi bi-bounding-box"></i>
+
+                        <div>
+
+                            <span class="overview-label">
+                                Área Total
+                            </span>
+
+                            <strong class="overview-value">
+                                1.800,00 m²
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-item">
+
+                        <i class="bi bi-geo-alt"></i>
+
+                        <div>
+
+                            <span class="overview-label">
+                                Localização
+                            </span>
+
+                            <strong class="overview-value">
+                                São Cosme, Gondomar
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <a href="contacto.html"
+                       class="overview-contact">
+
+                        <span>
+                            Contacte-nos
+                        </span>
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     CONTEÚDO
+                ================================================== -->
+
+                <div class="detail-content">
+
+                    <div class="detail-description">
+
+                        <span class="section-kicker">
+                            O PROJETO
+                        </span>
+
+                        <h2 class="detail-section-title">
+                            Descrição
+                        </h2>
+
+
+                        <p>
+                            Terreno com PIP (Pedido de Informação Prévia) aprovado,
+                            encontrando-se atualmente em fase de submissão da
+                            Comunicação Prévia para início da construção. O projeto
+                            prevê a construção de um empreendimento residencial
+                            distribuído por Cave, Piso 0, Piso 1 e Piso 2, com um
+                            total de 24 frações, distribuídas da seguinte forma:
+                        </p>
+
+
+                        <p>
+                            — Piso 0: 3 frações T0 e 5 frações T1;
+                        </p>
+
+
+                        <p>
+                            — Piso 1: 1 fração T0 e 7 frações T1;
+                        </p>
+
+
+                        <p>
+                            — Piso 2: 1 fração T0 e 7 frações T1;
+                        </p>
+
+
+                        <p>
+                            Ao nível da Cave, estão previstos lugares de
+                            estacionamento cobertos e exteriores, bem como uma
+                            ampla área ajardinada e uma zona de serviços de apoio
+                            às frações. O empreendimento dispõe ainda de elevador,
+                            bem como de todas as respetivas zonas comuns de
+                            circulação e acesso às frações, de acordo com as
+                            plantas do projeto.
+                        </p>
+
+
+                        <p>
+                            O empreendimento encontra-se inserido numa zona
+                            residencial tranquila, com abundante área verde,
+                            beneficiando da proximidade a Gondomar, Valbom e à
+                            cidade do Porto. A localização permite um acesso rápido,
+                            quer por viatura particular, quer através da rede de
+                            transportes públicos, a um conjunto diversificado de
+                            serviços, comércio, equipamentos e infraestruturas.
+                        </p>
+
+
+                        <section class="documents-section">
+
+                            <div class="documents-grid">
+
+                                <a href="assets/Extrema/PD_ARQ.pdf"
+                                   class="document-button"
+                                   target="_blank"
+                                   download>
+
+                                    <div class="document-left">
+
+                                        <div class="document-icon">
+                                            <i class="bi bi-file-earmark-pdf"></i>
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Plantas e Alçados
+                                            </strong>
+
+                                            <small>
+                                                Documento PDF
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                    <i class="bi bi-download"></i>
+
+                                </a>
+
+
+                                <a href="contacto.html"
+                                   class="cta-button">
+
+                                    <span>
+                                        Contacte-nos
+                                    </span>
+
+                                    <i class="bi bi-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         LOCALIZAÇÃO
+                    ================================================== -->
+
+                    <aside class="detail-location">
+
+                        <h2 class="detail-section-title">
+                            Localização
+                        </h2>
+
+
+                        <div class="detail-map">
+
+                            <div id="project-map"></div>
+
+                            <button class="map-expand-button"
+                                    id="map-expand-button"
+                                    type="button">
+
+                                <i class="bi bi-arrows-fullscreen"></i>
+
+                                <span>
+                                    Abrir mapa
+                                </span>
+
+                            </button>
+
+                        </div>
+
+
+                        <a class="detail-address"
+                           href="https://www.google.com/maps/search/?api=1&query=41.137385645420295,-8.54660927116361"
+                           target="_blank"
+                           rel="noopener noreferrer">
+
+                            <i class="bi bi-geo-alt"></i>
+
+                            <div>
+
+                                <strong>
+                                    Rua Extrema, São Cosme, Gondomar
+                                </strong>
+
+                                <span>
+                                    Ver localização no Google Maps
+                                </span>
+
+                            </div>
+
+                            <i class="bi bi-arrow-up-right"></i>
+
+                        </a>
+
+
+                        <div class="detail-spec-list location-points">
+
+                            <div class="detail-spec-row">
+
+                                <span>
+                                    Hospital Trofa Saúde
+                                </span>
+
+                                <strong>
+                                    ~ 3 min
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-spec-row">
+
+                                <span>
+                                    Edifício de Investigação Metyis
+                                </span>
+
+                                <strong>
+                                    ~ 3 min
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-spec-row">
+
+                                <span>
+                                    Multiusos e Parque Urbano de Gondomar
+                                </span>
+
+                                <strong>
+                                    ~ 4 min
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-spec-row">
+
+                                <span>
+                                    Nova Linha do Metro
+                                </span>
+
+                                <strong>
+                                    ~ 5 min
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-spec-row">
+
+                                <span>
+                                    Lidl / Mercadona
+                                </span>
+
+                                <strong>
+                                    ~ 5 min
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-spec-row">
+
+                                <span>
+                                    Estádio do Dragão
+                                </span>
+
+                                <strong>
+                                    ~ 10 min
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         LIGHTBOX
+    ====================================================== -->
+
+    <div class="image-modal"
+         id="image-modal"
+         aria-hidden="true">
+
+        <div class="modal-topbar">
+
+            <button class="modal-close"
+                    id="modal-close"
+                    type="button"
+                    aria-label="Fechar galeria">
+
+                <i class="bi bi-x-lg"></i>
+
+            </button>
+
+
+            <div class="modal-counter">
+
+                <span id="modal-current">
+                    1
+                </span>
+
+                /
+
+                <span id="modal-total">
+                    3
+                </span>
+
+            </div>
+
+            <div></div>
+
+        </div>
+
+
+        <div class="modal-stage-area">
+
+            <button class="modal-arrow modal-prev"
+                    id="modal-prev"
+                    type="button"
+                    aria-label="Imagem anterior">
+
+                <i class="bi bi-chevron-left"></i>
+
+            </button>
+
+
+            <div class="modal-image-wrap">
+
+                <img id="modal-image"
+                     src="assets/Extrema/FachadaPrincipal.png"
+                     alt="Fachada Principal">
+
+            </div>
+
+
+            <button class="modal-arrow modal-next"
+                    id="modal-next"
+                    type="button"
+                    aria-label="Imagem seguinte">
+
+                <i class="bi bi-chevron-right"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-bottom">
+
+            <div class="modal-description">
+
+                <span id="modal-image-description">
+                    Vista da Fachada Principal.
+                </span>
+
+            </div>
+
+
+            <div class="modal-thumbnails"
+                 id="modal-thumbnails">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CTA / FOOTER
+    ====================================================== -->
+
+    <section class="cta-section">
+
+        <div class="section-container cta-container">
+
+            <div class="cta-content">
+
+                <span class="section-kicker cta-kicker">
+                    TEM INTERESSE?
+                </span>
+
+                <h2>
+                    Encontre o seu<br>
+                    <em>próximo projeto.</em>
+                </h2>
+
+                <p>
+                    Fale connosco para obter mais informações sobre os empreendimentos disponíveis.
+                </p>
+
+            </div>
+
+
+            <div class="footer-container">
+
+                <div class="footer-column">
+
+                    <strong>
+                        Navegação
+                    </strong>
+
+                    <a href="index.html#empreendimentos">
+                        Empreendimentos
+                    </a>
+
+                    <a href="contacto.html">
+                        Contacto
+                    </a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <strong>
+                        Legal
+                    </strong>
+
+                    <a href="assets/politica_privacidade_rgpd.pdf"
+                       target="_blank">
+
+                        Política de Privacidade
+
+                    </a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <strong>
+                        Contacto
+                    </strong>
+
+                    <p>
+                        +351 916 327 948
+                    </p>
+
+                    <p>
+                        geral.umbau@gmail.com
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="detalhe.js"></script>
+
+</body>
+
+</html>
