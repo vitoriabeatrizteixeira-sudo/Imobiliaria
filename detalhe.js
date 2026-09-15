@@ -68,8 +68,13 @@ const galleryImages = [
         src: "assets/Extrema/NovaLinha.png",
         title: "Nova Linha",
         description: "Nova Esta\u00e7\u00e3o de Metro do Souto."
-    }
+    },
 
+    {
+        src: "assets/Extrema/Localizacao.png",
+        title: "Localização Empreendimento",
+        description: "Localiza\u00e7\u00e3o Empreendimento."
+    }
 ];
 
 
