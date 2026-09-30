@@ -74,6 +74,12 @@ const galleryImages = [
         src: "assets/Extrema/Localizacao.png",
         title: "Localização Empreendimento",
         description: "Localiza\u00e7\u00e3o Empreendimento."
+    },
+   
+   {
+        src: "assets/Extrema/LocalizacaoEstadio.png",
+        title: "Localização Empreendimento e Estádio do Dragão",
+        description: "Localiza\u00e7\u00e3o Empreendimento."
     }
 ];
 
