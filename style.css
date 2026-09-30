@@ -307,18 +307,18 @@ a {
 
     /* Imagens desfocadas */
     .project-card-coming-soon .project-gallery-track {
-        filter: blur(10px);
+        filter: blur(2px);
     }
 
     /* Informação do projeto desfocada */
     .project-card-coming-soon .project-info {
-        filter: blur(2px);
+        filter: blur(1px);
     }
 
     /* Contador e pontos também desfocados */
     .project-card-coming-soon .project-gallery-counter,
     .project-card-coming-soon .project-gallery-dots {
-        filter: blur(2px);
+        filter: blur(1px);
     }
 
 
